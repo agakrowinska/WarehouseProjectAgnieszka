@@ -12,4 +12,9 @@ The features that are planned to be added are:
 
 *none of the features are implemented and the list will change during the work on the project*
 
-Here you can find the [Java Course] (https://www.codecademy.com/learn/learn-java) to help you do it
+Here you can find the [Java Course](https://www.codecademy.com/learn/learn-java) to help you do it
+
+### License
+
+
+
