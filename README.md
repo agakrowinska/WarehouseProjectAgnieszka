@@ -16,5 +16,7 @@ Here you can find the [Java Course](https://www.codecademy.com/learn/learn-java)
 
 ### License
 
+[Apache License 2.0](https://github.com/agakrowinska/WarehouseProjectAgnieszka/blob/264b1eedf3fa9d09c465befa5a6550fc80eaf39e/LICENSE.txt)
+
 
 
