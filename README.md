@@ -5,7 +5,7 @@ Assignment Warehouse
 The features that are planned to be added are:
 
 
-1. Planning the future supply deliveries
+1. Managing the plans of the clients
 2. Organizing incoming orders
 3. Listing action of the logged users
 4. Reporting data for further analysis
