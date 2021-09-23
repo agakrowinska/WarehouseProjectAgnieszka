@@ -14,7 +14,7 @@ The features that are planned to be added are:
 
 Here you can find the [Java Course](https://www.codecademy.com/learn/learn-java) to help you do it
 
-###Development environment
+### Development environment
 
 In this early stage I am using IntelliJ and Git to manage my directories
 
