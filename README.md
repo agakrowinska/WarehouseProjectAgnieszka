@@ -14,6 +14,10 @@ The features that are planned to be added are:
 
 Here you can find the [Java Course](https://www.codecademy.com/learn/learn-java) to help you do it
 
+###Development environment
+
+In this early stage I am using IntelliJ and Git to manage my directories
+
 #### License
 
 [Apache License 2.0](https://github.com/agakrowinska/WarehouseProjectAgnieszka/blob/264b1eedf3fa9d09c465befa5a6550fc80eaf39e/LICENSE.txt)
