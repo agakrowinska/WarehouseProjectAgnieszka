@@ -38,9 +38,12 @@ public class TheWarehouseManager {
   /** Ask for user's choice of action */
   public int getUsersChoice() {
     System.out.println("You probably came here with a purpose. Please tell me what would you like to do?");
-    System.out.println("Please type the number below");
     for (String i: userOptions);
     System.out.println(String[i]);
+    System.out.println("Please type the number below");
+    Scanner inputChoice = new Scanner(System.in);
+    String usersChoice = inputChoice.nextLine();
+
   }
 
   /** Initiate an action based on given option */
@@ -72,17 +75,17 @@ public class TheWarehouseManager {
 
   /** Get user's name via CLI */
   private void seekUserName(String) {
+    Scanner userScanner = new Scanner(System.in);
     System.out.println("Hello! Great to see you! Please give me your name so I can help you further");
-    String seekUserName = reader.nextLine();
-    System.out.println("Hey "+userName+" thanks for being here! ");
-
+    String userName = userScanner.nextLine();
+    greetUser(userName);
 
 
   }
 
   /** Print a welcome message with the given user's name */
-  private void greetUser() {
-    // TODO
+  private void greetUser(String givenName) {
+    System.out.println("Hey "+givenName+" thanks for being here! ");
   }
 
   private void listItemsByWarehouse() {
