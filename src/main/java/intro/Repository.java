@@ -1,4 +1,4 @@
-package com.dci.java.intro.data;
+package main.java.intro;
 
 /**
  * The Data Repository

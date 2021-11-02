@@ -1,9 +1,11 @@
 package main.java.intro;
 
-import static com.dci.java.intro.data.Repository.WAREHOUSE1;
-import static com.dci.java.intro.data.Repository.WAREHOUSE2;
+import static main.java.intro.Repository.WAREHOUSE1;
+import static main.java.intro.Repository.WAREHOUSE2;
+import static main.java.intro.Repository.WAREHOUSE1;
 
 import java.util.Scanner;
+import java.util.*;
 
 /**
  * Provides necessary methods to deal through the Warehouse management actions
@@ -17,8 +19,10 @@ public class TheWarehouseManager {
 
   // To read inputs from the console/CLI
   private final Scanner reader = new Scanner(System.in);
-  private final String[] userOptions = {
-    "1. List items by warehouse", "2. Search an item and place an order", "3. Quit"
+  public final String[] userOptions = {
+    "1. List items by warehouse",
+          "2. Search an item and place an order",
+          "3. Quit"
   };
   // To refer the user provided name.
   private String userName;
@@ -30,27 +34,34 @@ public class TheWarehouseManager {
   /** Welcome User */
   public void welcomeUser() {
     this.seekUserName();
-    this.greetUser();
-    System.out.println("Hey "+userName+" thanks for being here! ");
+    //this.greetUser();
+
 
   }
 
   /** Ask for user's choice of action */
   public int getUsersChoice() {
     System.out.println("You probably came here with a purpose. Please tell me what would you like to do?");
-    for (String i: userOptions);
-    System.out.println(String[i]);
+    for (String i: userOptions){
+    System.out.println(i);
+    }
+
     System.out.println("Please type the number below");
     Scanner inputChoice = new Scanner(System.in);
     String usersChoice = inputChoice.nextLine();
+
+    return Integer.parseInt(usersChoice);
 
   }
 
   /** Initiate an action based on given option */
   public void performAction(int option) {
-    switch(option);
-    case 1:
-    System.out.println("Check out what is available in both of our warehouses!");
+  if(option == 1) {
+    System.out.println("Here is what we have in Warehouse 1: "+Arrays.toString(Repository.WAREHOUSE1));
+    System.out.println("Here is what we have in Warehouse 2: "+Arrays.toString(Repository.WAREHOUSE2));
+  }else if (option == 2){
+
+  }
     //
   }
 
@@ -59,9 +70,9 @@ public class TheWarehouseManager {
    *
    * @return action
    */
-  public boolean confirm(String message) {
+  //public boolean confirm(String message) {
     // TODO
-  }
+  //}
 
   /** End the application */
   public void quit() {
@@ -74,7 +85,7 @@ public class TheWarehouseManager {
   // =====================================================================================
 
   /** Get user's name via CLI */
-  private void seekUserName(String) {
+  private void seekUserName() {
     Scanner userScanner = new Scanner(System.in);
     System.out.println("Hello! Great to see you! Please give me your name so I can help you further");
     String userName = userScanner.nextLine();
@@ -105,9 +116,9 @@ public class TheWarehouseManager {
    *
    * @return String itemName
    */
-  private String askItemToOrder() {
+  //private String askItemToOrder() {
     // TODO
-  }
+  //}
 
   /**
    * Calculate total availability of the given item
@@ -115,9 +126,9 @@ public class TheWarehouseManager {
    * @param itemName itemName
    * @return integer availableCount
    */
-  private int getAvailableAmount(String itemName) {
+ // private int getAvailableAmount(String itemName) {
     // TODO
-  }
+  //}
 
   /**
    * Find the count of an item in a given warehouse
@@ -126,9 +137,9 @@ public class TheWarehouseManager {
    * @param warehouse the warehouse
    * @return count
    */
-  private int find(String item, String[] warehouse) {
+ // private int find(String item, String[] warehouse) {
     // TODO
-  }
+ // }
 
   /** Ask order amount and confirm order */
   private void askAmountAndConfirmOrder(int availableAmount, String item) {
@@ -141,7 +152,7 @@ public class TheWarehouseManager {
    * @param availableAmount
    * @return
    */
-  private int getOrderAmount(int availableAmount) {
+ // private int getOrderAmount(int availableAmount) {
     // TODO
-  }
+  //}
 }
