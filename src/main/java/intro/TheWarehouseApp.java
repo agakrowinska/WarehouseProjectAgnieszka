@@ -23,8 +23,9 @@ public class TheWarehouseApp {
 
       // confirm to do more
       //if (!theManager.confirm("Do you want to perform another action?")) {
-        //theManager.quit();
-      //}
+        theManager.quit();
+      }
+      }
 
     } while (true);
   }

@@ -60,6 +60,18 @@ public class TheWarehouseManager {
     System.out.println("Here is what we have in Warehouse 1: "+Arrays.toString(Repository.WAREHOUSE1));
     System.out.println("Here is what we have in Warehouse 2: "+Arrays.toString(Repository.WAREHOUSE2));
   }else if (option == 2){
+    System.out.println("Which item you are interested in?");
+    Scanner itemName = new Scanner(System.in);
+    String itemInput = itemName.nextLine();
+    for (String j: Repository.WAREHOUSE1){
+      if(j == itemInput){
+        int numberOfItems = numberOfItems+1;
+
+      }
+    }
+
+
+  }
 
   }
     //
@@ -70,7 +82,7 @@ public class TheWarehouseManager {
    *
    * @return action
    */
-  //public boolean confirm(String message) {
+  public boolean confirm(String message) {
     // TODO
   //}
 
@@ -116,9 +128,9 @@ public class TheWarehouseManager {
    *
    * @return String itemName
    */
-  //private String askItemToOrder() {
+  private String askItemToOrder() {
     // TODO
-  //}
+  }
 
   /**
    * Calculate total availability of the given item
@@ -126,9 +138,9 @@ public class TheWarehouseManager {
    * @param itemName itemName
    * @return integer availableCount
    */
- // private int getAvailableAmount(String itemName) {
+ private int getAvailableAmount(String itemName) {
     // TODO
-  //}
+  }
 
   /**
    * Find the count of an item in a given warehouse
@@ -137,9 +149,9 @@ public class TheWarehouseManager {
    * @param warehouse the warehouse
    * @return count
    */
- // private int find(String item, String[] warehouse) {
+ private int find(String item, String[] warehouse) {
     // TODO
- // }
+  }
 
   /** Ask order amount and confirm order */
   private void askAmountAndConfirmOrder(int availableAmount, String item) {
@@ -152,7 +164,7 @@ public class TheWarehouseManager {
    * @param availableAmount
    * @return
    */
- // private int getOrderAmount(int availableAmount) {
+  private int getOrderAmount(int availableAmount) {
     // TODO
-  //}
+  }
 }
