@@ -56,26 +56,25 @@ public class TheWarehouseManager {
 
   /** Initiate an action based on given option */
   public void performAction(int option) {
-  if(option == 1) {
-    System.out.println("Here is what we have in Warehouse 1: "+Arrays.toString(Repository.WAREHOUSE1));
-    System.out.println("Here is what we have in Warehouse 2: "+Arrays.toString(Repository.WAREHOUSE2));
-  }else if (option == 2){
-    System.out.println("Which item you are interested in?");
-    Scanner itemName = new Scanner(System.in);
-    String itemInput = itemName.nextLine();
-    for (String j: Repository.WAREHOUSE1){
-      if(j == itemInput){
-        int numberOfItems = numberOfItems+1;
-
-      }
-    }
+  //if(option == 1) {
+    //System.out.println("Here is what we have in Warehouse 1: "+Arrays.toString(Repository.WAREHOUSE1));
+    //System.out.println("Here is what we have in Warehouse 2: "+Arrays.toString(Repository.WAREHOUSE2));
+  //}else if (option == 2){
+    //System.out.println("Which item you are interested in?");
+    //Scanner itemName = new Scanner(System.in);
+    //String itemInput = itemName.nextLine();
+    //for (String j: Repository.WAREHOUSE1){
+      //if(j == itemInput){
+        //int numberOfItems = numberOfItems++;
+      //}
+    //}
 
 
   }
 
   }
     //
-  }
+
 
   /**
    * Confirm an action
@@ -112,15 +111,27 @@ public class TheWarehouseManager {
   }
 
   private void listItemsByWarehouse() {
-    // TODO
+    //
+    }
+    // TODO here you use loops to show each item in each warehouse
+    //print "warehouse1:"
+    //listItems(Repository.WAREHOUSE1)
+    //print "warehouse2"
+    //listItems(Repository.WAREHOUSE2)
+    System.out.println("Here is what we have in Warehouse 1: ");
+
   }
 
   private void listItems(String[] warehouse) {
     // TODO
+    ////loop over warehouse: inside the loop print each item
   }
 
   private void searchItemAndPlaceOrder() {
     // TODO
+    //item = askItemToOrder();
+    //getAvaialbleAmount(item);
+    //if AvaialbleAmount > 0 then askAmountAndConfirmOrder(item, AvaialbleAmount)
   }
 
   /**
@@ -130,6 +141,9 @@ public class TheWarehouseManager {
    */
   private String askItemToOrder() {
     // TODO
+    // print What is the name of the item you want
+    //scan the input to see get the tem for the user input .nextLine()
+    //return the input
   }
 
   /**
@@ -140,6 +154,13 @@ public class TheWarehouseManager {
    */
  private int getAvailableAmount(String itemName) {
     // TODO
+   //find availability in each warehouse
+   // find(item , WAREHOUSE1)
+   // find(item, WAREHOUSE2)
+   //calculate the total available amount
+   //check which warehouse hase more amount , w1 > w2, w1 < w2, w1 = w2
+   // display availability in each warehouse, with a string telling maximum or minimum also equality
+   //return the total amount
   }
 
   /**
@@ -156,6 +177,9 @@ public class TheWarehouseManager {
   /** Ask order amount and confirm order */
   private void askAmountAndConfirmOrder(int availableAmount, String item) {
     // TODO
+    //ask the user how many they want
+    // if they want more than availableAmount then tell itz is not possible and ask them to choose wehter to contionue with the available amount or cancle
+    //else show the message to confirm the order
   }
 
   /**
