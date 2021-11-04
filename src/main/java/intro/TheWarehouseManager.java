@@ -114,14 +114,17 @@ public class TheWarehouseManager {
     //print "warehouse2"
     //listItems(Repository.WAREHOUSE2)
     System.out.println("Here is what we have in Warehouse 1: ");
+  listItems(Repository.WAREHOUSE1);
+    System.out.println("Here is what we have in Warehouse 2: ");
+    listItems(Repository.WAREHOUSE2);
+
 
   }
 
   private void listItems(String[] warehouse) {
     // TODO
     ////loop over warehouse: inside the loop print each item
-    String[] warehouse;
-    warehouse = Repository.WAREHOUSE1;
+    String[] warehouse = new String[];
 
     int index =0;
     while (index<warehouse.lenght()) {
