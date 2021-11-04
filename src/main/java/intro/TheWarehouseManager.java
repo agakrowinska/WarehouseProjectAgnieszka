@@ -150,6 +150,14 @@ public class TheWarehouseManager {
     // print What is the name of the item you want
     //scan the input to see get the tem for the user input .nextLine()
     //return the input
+    System.out.println("Which item you are interested in?");
+    Scanner itemName = new Scanner(System.in);
+    String itemInput = itemName.nextLine();
+    for (String j : Repository.WAREHOUSE1) {
+      if (j == itemInput) {
+        int numberOfItems = numberOfItems++;
+      }
+    }
   }
 
   /**
