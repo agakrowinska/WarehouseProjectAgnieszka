@@ -1,11 +1,6 @@
 package main.java.intro;
 
-import static main.java.intro.Repository.WAREHOUSE1;
-import static main.java.intro.Repository.WAREHOUSE2;
-import static main.java.intro.Repository.WAREHOUSE1;
-
 import java.util.Scanner;
-import java.util.*;
 
 /**
  * Provides necessary methods to deal through the Warehouse management actions
@@ -125,6 +120,14 @@ public class TheWarehouseManager {
   private void listItems(String[] warehouse) {
     // TODO
     ////loop over warehouse: inside the loop print each item
+    String[] warehouse;
+    warehouse = Repository.WAREHOUSE1;
+
+    int index =0;
+    while (index<warehouse.lenght()) {
+      String amount = warehouse[index];
+      index++;
+    }
   }
 
   private void searchItemAndPlaceOrder() {
