@@ -1,9 +1,11 @@
-package main.java.intro;
+package main.java;
+
+import main.java.data.Repository;
 
 import java.util.Scanner;
-import java.util.Locale;
-import static main.java.intro.Repository.WAREHOUSE1;
-import static main.java.intro.Repository.WAREHOUSE2;
+
+import static main.java.data.Repository.WAREHOUSE1;
+import static main.java.data.Repository.WAREHOUSE2;
 
 /**
  * Provides necessary methods to deal through the Warehouse management actions
