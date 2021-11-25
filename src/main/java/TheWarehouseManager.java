@@ -1,8 +1,15 @@
 package main.java;
 
+import main.java.data.Item;
 import main.java.data.Repository;
-
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static main.java.data.Repository.WAREHOUSE1;
 import static main.java.data.Repository.WAREHOUSE2;
@@ -40,16 +47,28 @@ public class TheWarehouseManager {
   /** Ask for user's choice of action */
   public int getUsersChoice() {
     int choice;
-
-    for (String option: userOptions){
+    System.out.println("What would you like to do now?");
+    for (String option: this.userOptions){
     System.out.println(option);
     }
 
     System.out.println("Please type the number below");
-    Scanner inputChoice = new Scanner(System.in);
-    String usersChoice = inputChoice.nextLine();
+    do {
+      String selectedOption = this.reader.nextLine();
+      try {
+        choice = Integer.parseInt(selectedOption);
+      } catch (Exception e) {
+        choice = 0;
+      }
+      // Guide the user to enter correct value
+      if (choice < 1 || choice > userOptions.length) {
+        System.out.printf("Sorry! Enter an integer between 1 and %d. ", this.userOptions.length);
+      }
+    } while (choice < 1 || choice > userOptions.length);
 
-    return Integer.parseInt(usersChoice);
+    // return the valid choice
+    return choice;
+  }
 
   }
 
@@ -76,21 +95,23 @@ public class TheWarehouseManager {
    * @return action
    */
   public boolean confirm(String message) {
-    String choice;
-    do {
-      System.out.printf("%s (y/n)\n", message);
-      choice = this.reader.nextLine();
-      if (choice.length() > 0) {
-        choice = choice.trim();
-      }
-      choice = choice.toLowerCase();
+      System.out.printf("%s (y/n)%n", message);
+      String choice;
+      do {
+        choice = this.reader.nextLine();
+        if (choice.length() > 0) {
+          choice = choice.trim();
+        }
+      } while (!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"));
 
-    } while (!choice.startsWith("y") && !choice.startsWith("n"));
-    return choice.startsWith("y");
+      return choice.equalsIgnoreCase("y");
+    }
 
+    /** End the application */
     public void quit() {
       System.out.printf("\nThank you for your visit, %s!\n", this.userName);
       System.exit(0);
+    }
     }
 
     // =====================================================================================
@@ -109,14 +130,19 @@ public class TheWarehouseManager {
       System.out.printf("\nHello, %s !\n", this.userName);
     }
 
-    private void listItemsByWarehouse () {
-      System.out.println("Here is what we have in Warehouse 1: ");
-      this.listItems(Repository.WAREHOUSE1);
-      System.out.println("Here is what we have in Warehouse 2: ");
-      this.listItems(Repository.WAREHOUSE2);
+    private void listItemsByWarehouse (){
+        Set<Integer> warehouses=Repository.getWarehouses();
+        for(int warehouse:warehouses){
+        System.out.printf("Items in warehouse %d:%n",warehouse);
+        this.listItems(Repository.getItemsByWarehouse(warehouse));
+        }
 
-    }
-  }
+        System.out.println();
+        for(int warehouse:warehouses){
+        System.out.printf(
+        "Total items in warehouse %d: %d%n", warehouse,Repository.getItemsByWarehouse(warehouse).size());
+        }
+        }
 
   private void listItems(String[] warehouse) {
     for (String item : warehouse) {
@@ -281,4 +307,4 @@ public class TheWarehouseManager {
 
     return orderAmount;
   }
-}
+        }
