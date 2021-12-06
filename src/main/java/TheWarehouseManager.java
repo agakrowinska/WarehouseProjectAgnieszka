@@ -144,20 +144,47 @@ public class TheWarehouseManager {
         }
         }
 
-  private void listItems(String[] warehouse) {
-    for (String item : warehouse) {
-      System.out.printf("\n- %s\n", item);
+  private void listItems(List<Item> items) {
+    for (Item item : items) {
+      System.out.printf("- %s%n", item.toString());
     }
   }
 
   private void searchItemAndPlaceOrder() {
     String itemName = askItemToOrder();
-    int availableAmount = this.getAvailableAmount(itemName);
-    if(availableAmount > 0){
-      this.askAmountAndConfirmOrder(availableAmount, itemName);
+    List<Item> availableItems = this.listAvailableItems(itemName);
+    if (availableItems.size() > 0) {
+      this.askAmountAndConfirmOrder(availableItems.size(), itemName);
+    }
+  }
+
+  private void browseByCategory() {
+    Map<String, List<Item>> categoryWiseItems = new HashMap<>();
+    List<String> categories = new ArrayList<>(Repository.getCategories());
+    for (int i = 0; i < categories.size(); i++) {
+      String category = categories.get(i);
+      List<Item> catItems = Repository.getItemsByCategory(category);
+      categoryWiseItems.put(category, catItems);
+      System.out.printf("%d. %s (%d)%n", (i + 1), category, catItems.size());
     }
 
+    int catIndex = 0;
+    do {
+      System.out.println("Type the number of the category to browse:");
+      try {
+        catIndex = Integer.parseInt(reader.nextLine());
+      } catch (Exception e) {
+        System.out.printf("Enter an integer between 1 and %d%n", categories.size());
+      }
 
+    } while (catIndex <= 0 || catIndex > categories.size());
+
+    String category = categories.get(catIndex - 1);
+    System.out.printf("List of %ss available:%n", category.toLowerCase());
+    List<Item> catItems = categoryWiseItems.get(category);
+    for (Item item : catItems) {
+      System.out.printf("%s, Warehouse %d%n", item.toString(), item.getWarehouse());
+    }
   }
 
   /**
@@ -172,139 +199,111 @@ public class TheWarehouseManager {
   }
 
   /**
-   * Calculate total availability of the given item
+   * List availability of the given item
    *
-   * @param itemName itemName
-   * @return integer availableCount
+   * @param itemName the item name
+   * @return List<Item> availableItems
    */
- private int getAvailableAmount(String itemName) {
-   int count1 = find(itemName, WAREHOUSE1);
-   int count2 = find(itemName, WAREHOUSE2);
-   int availableAmount = count1+count2;
+  private List<Item> listAvailableItems(String itemName) {
+    // find availability in Repository
+    List<Item> availableItems = this.find(itemName);
+    int availableCount = availableItems.size();
+    System.out.printf("Amount available: %d%n", availableCount);
 
-   String foundInWareHouse;
-   if(count1 > 0 &&  count2 > 0){
-     foundInWareHouse = "Both Warehouses";
-   }else if( count1 > 0){
-     foundInWareHouse = "Warehouse1";
-   }else if( count2 > 0){
-     foundInWareHouse = "Warehouse2";
-   }else{
-     foundInWareHouse = "Not in stock";
-   }
-   int maximumQuantity;
-   String maximumQuantityIn;
+    if (availableCount > 0) {
+      System.out.println("Location:");
+      for (Item item : availableItems) {
+        long noOfDaysInStock =
+                TimeUnit.DAYS.convert(
+                        (new Date().getTime() - item.getDateOfStock().getTime()), TimeUnit.MILLISECONDS);
+        System.out.printf(
+                "- Warehouse %d (in stock for %d days)%n", item.getWarehouse(), noOfDaysInStock);
+      }
 
-   if(foundInWareHouse.equals("Not in stock")){
-     maximumQuantity = 0;
-     maximumQuantityIn = "Not in stock";
-   }else if( count1 > count2 ){
-     //there are more quantity of item in warehouse 1
-     maximumQuantity = count1;
-     maximumQuantityIn = "Warehouse 1";
-   }else if(count2 > count1){
-     //there are more quantity of item in warehouse 2
-     maximumQuantity = count2;
-     maximumQuantityIn = "Warehouse 2";
-   }else {
-     maximumQuantity = count2; // or count 1 because they are equal
-     maximumQuantityIn = "Both warehouses have the same Quantity";
-   }
+      // get warehouse wise availability
+      int maxWarehouse = 0;
+      int maxAvailability = 0;
+      Set<Integer> warehouses = Repository.getWarehouses();
+      for (int wh : warehouses) {
+        int whCount = Repository.getItemsByWarehouse(wh, availableItems).size();
+        if (whCount > maxAvailability) {
+          maxWarehouse = wh;
+          maxAvailability = whCount;
+        }
+      }
 
-   //display the availability details
-   //The total amount
-   System.out.printf("Amount available: %d\n",availableAmount);
-   //The location of those items : foundInWareHouse
-   System.out.printf("Location: %s\n",foundInWareHouse);
-   //the maximum availability of those items.
-   if(foundInWareHouse.equals("Not in stock")){
-     System.out.printf("Maximum availability is:0 and  %s is Not in stock",itemName);
-   }else if(count1 == count2){
-     System.out.printf("Maximum availability is: %d and Both warehouses have the same availability", count1);
-   }else{
-     System.out.printf("Maximum availability is: %d in %s\n", maximumQuantity, maximumQuantityIn);
-   }
+      // find the warehouse with max
+      System.out.printf(
+              "Maximum availability: %d in warehouse %d%n", maxAvailability, maxWarehouse);
+    } else {
+      System.out.println("Location: Not in stock");
+    }
 
-   //return total available amount
-   return availableAmount;
- }
-
+    // return available items
+    return availableItems;
+  }
 
   /**
-   * Find the count of an item in a given warehouse
+   * Find matching items in the repository
    *
    * @param item the item
-   * @param warehouse the warehouse
-   * @return count
+   * @return items
    */
- private int find(String item, String[] warehouse) {
-   int count = 0;
-   for (String wItem :warehouse ) {
-     if(item.equals(wItem)){
-       count++;
-     }
-   }
-   return count;
+  private List<Item> find(String item) {
+    List<Item> items = new ArrayList<>();
+    for (Item wItem : Repository.getAllItems()) {
+      if (wItem.toString().equalsIgnoreCase(item)) {
+        items.add(wItem);
+      }
+    }
+    return items;
   }
 
   /** Ask order amount and confirm order */
   private void askAmountAndConfirmOrder(int availableAmount, String item) {
+    // Check if user want's to order
     boolean toOrder = this.confirm("Would you like to order this item?");
-    if(toOrder){
-      //If the answer is yes, it should ask the user how many do they want
+    if (toOrder) {
+      // get the amount to order
       int orderAmount = this.getOrderAmount(availableAmount);
-
-      //if the orderAmount is -1 then just go to the searchItemAndPlaceOrder()  :
-      if(orderAmount > 0){
-        System.out.printf("%d %s %s been ordered",orderAmount,item,(orderAmount ==1 ? "has" : "have"));
+      // Confirm order if amount is positive
+      if (orderAmount > 0) {
+        System.out.printf(
+                "%d %s %s been ordered", orderAmount, item, (orderAmount == 1 ? "has" : "have"));
       }
-
     }
   }
 
   /**
    * Get amount of order
    *
-   * @param availableAmount
-   * @return
+   * @param availableAmount the available amount
+   * @return the order amount
    */
   private int getOrderAmount(int availableAmount) {
-    int orderAmount = -1;
-    System.out.println("What amount would you like to have?");
-    do{
-      // read the amount from the cli
-      orderAmount = Integer.parseInt(this.reader.nextLine());
-      // if the orderAmount is more than the availableAmount
-      if(orderAmount > availableAmount){
-        // it should show an error message and should ask
+    int orderAmount;
+    System.out.println("How many would you like?");
+    do {
+      String orderAmtValue = this.reader.nextLine();
+      try {
+        orderAmount = Integer.parseInt(orderAmtValue);
+        if (orderAmount > availableAmount) {
+          System.out.println("**************************************************");
+          System.out.println(
+                  "There are not this many available. The maximum amount that can be ordered is "
+                          + availableAmount);
+          System.out.println("**************************************************");
 
-        System.out.println("***************************************************************");
-        System.out.println("There are not many available. The maximum amount that can be ordered is "+ availableAmount);
-        System.out.println("***************************************************************");
-
-        boolean orderAll = this.confirm("Would you like to order the maximum available?");
-
-        if(orderAll){
-          orderAmount = availableAmount;
-        }else{
-          boolean keepOrdering = this.confirm("Do you want to order another amount of this item?");
-          if(keepOrdering){
-            orderAmount = -1;
-          }else{
-            orderAmount = 0;
-          }
-
+          boolean orderAll = this.confirm("Would you like to order the maximum available?");
+          orderAmount = orderAll ? availableAmount : 0;
+        } else if (orderAmount < 0) {
+          System.out.println("Please enter a value more than or equal to 0.");
         }
-
-
-      }else if(orderAmount < 0){
-
-        System.out.println("It is not the right amount. Please put the number more than 0.");
-      }else{
-        return -1;
+      } catch (Exception e) {
+        orderAmount = -1;
       }
-    }while(orderAmount < 0 || orderAmount > availableAmount);
+    } while (orderAmount < 0 || orderAmount > availableAmount);
 
     return orderAmount;
   }
-        }
+}
