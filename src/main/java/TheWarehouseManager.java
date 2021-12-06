@@ -11,9 +11,6 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static main.java.data.Repository.WAREHOUSE1;
-import static main.java.data.Repository.WAREHOUSE2;
-
 /**
  * Provides necessary methods to deal through the Warehouse management actions
  *
@@ -29,7 +26,8 @@ public class TheWarehouseManager {
   public final String[] userOptions = {
     "1. List items by warehouse",
           "2. Search an item and place an order",
-          "3. Quit"
+          "3. Browse by category",
+          "4. Quit"
   };
   // To refer the user provided name.
   private String userName;
@@ -52,7 +50,7 @@ public class TheWarehouseManager {
     System.out.println(option);
     }
 
-    System.out.println("Please type the number below");
+    System.out.println("Please type the number below:");
     do {
       String selectedOption = this.reader.nextLine();
       try {
@@ -70,7 +68,6 @@ public class TheWarehouseManager {
     return choice;
   }
 
-  }
 
   /** Initiate an action based on given option */
   public void performAction(int option) {
@@ -82,6 +79,9 @@ public class TheWarehouseManager {
         this.searchItemAndPlaceOrder();
         break;
       case 3:
+        this.browseByCategory();
+        break;
+      case 4:
         this.quit();
         break;
       default:
@@ -109,10 +109,10 @@ public class TheWarehouseManager {
 
     /** End the application */
     public void quit() {
-      System.out.printf("\nThank you for your visit, %s!\n", this.userName);
+      System.out.printf("\nThanks for visiting %s!\n", this.userName);
       System.exit(0);
     }
-    }
+
 
     // =====================================================================================
     // Private Methods
@@ -127,7 +127,7 @@ public class TheWarehouseManager {
 
     /** Print a welcome message with the given user's name */
     private void greetUser () {
-      System.out.printf("\nHello, %s !\n", this.userName);
+      System.out.printf("\nWelcome, %s !\n", this.userName);
     }
 
     private void listItemsByWarehouse (){
@@ -140,7 +140,7 @@ public class TheWarehouseManager {
         System.out.println();
         for(int warehouse:warehouses){
         System.out.printf(
-        "Total items in warehouse %d: %d%n", warehouse,Repository.getItemsByWarehouse(warehouse).size());
+                "Total items in warehouse %d: %d%n", warehouse, Repository.getItemsByWarehouse(warehouse).size());
         }
         }
 
