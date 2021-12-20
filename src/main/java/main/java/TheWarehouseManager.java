@@ -1,6 +1,5 @@
 package main.java;
 
-import main.java.data.Item;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,8 +8,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import main.java.StockRepository;
 
 /**
  * Provides necessary methods to deal through the Warehouse management actions
@@ -120,6 +117,7 @@ public class TheWarehouseManager {
    */
   public void quit() {
     System.out.printf("\nThanks for visiting %s!\n", this.userName);
+    this.listSessionActions();
     System.exit(0);
   }
 
@@ -131,50 +129,53 @@ public class TheWarehouseManager {
 
   public String getAppropriateIndefiniteArticle(String itemName) {
     String article;
-    if (itemName.charAt(0) == 'a' || itemName.charAt(0)=='e' || itemName.charAt(0) == 'i' || itemName.charAt(0)=='o' || itemName.charAt(0)=='u') {
+    if (itemName.charAt(0) == 'a' || itemName.charAt(0) == 'e' || itemName.charAt(0) == 'i' || itemName.charAt(0) == 'o' || itemName.charAt(0) == 'u') {
       article = "an";
-    }else{
+    } else {
       article = "a";
     }
     return article;
 
-}
+  }
 
 
+  // =====================================================================================
+  // Private Methods
+  // =====================================================================================
 
-    // =====================================================================================
-    // Private Methods
-    // =====================================================================================
+  /**
+   * Get user's name via CLI
+   */
+  private void seekUserName() {
+    System.out.print("Hey!Great to see you, please tell my what is your name.");
+    this.userName = this.reader.nextLine();
 
-    /** Get user's name via CLI */
-    private void seekUserName () {
-      System.out.print("Hey!Great to see you, please tell my what is your name.");
-      this.userName = this.reader.nextLine();
+  }
 
-    }
+  /**
+   * Print a welcome message with the given user's name
+   */
+  private void greetUser() {
+    System.out.printf("\nWelcome, %s !\n", this.userName);
+  }
 
-    /** Print a welcome message with the given user's name */
-    private void greetUser () {
-      System.out.printf("\nWelcome, %s !\n", this.userName);
-    }
+  private void listItemsByWarehouse() {
 
-    private void listItemsByWarehouse (){
+    int total = this.getTotalListedItems();
+    String listedItems = "Listed " + total + " items";
+    SESSION_ACTIONS.add(listedItems);
+    Set<Integer> warehouses=StockRepository.getWarehouses();
+    //for(int warehouse:warehouses){
+    //System.out.printf("Items in warehouse %d:%n",warehouse);
+    //this.listItems(StockRepository.getItemsByWarehouse(warehouse));
+  }
 
-        int total = this.getTotalListedItems();
-        String listedItems = "Listed " + total+ " items";
-        SESSION_ACTIONS.add(listedItems);
-        //Set<Integer> warehouses=StockRepository.getWarehouses();
-        //for(int warehouse:warehouses){
-        //System.out.printf("Items in warehouse %d:%n",warehouse);
-        //this.listItems(StockRepository.getItemsByWarehouse(warehouse));
-        }
-
-        //System.out.println();
-        //for(int warehouse:warehouses){
-        //System.out.printf(
-                //"Total items in warehouse %d: %d%n", warehouse, StockRepository.getItemsByWarehouse(warehouse).size());
-        //}
-        //}
+  //System.out.println();
+  //for(int warehouse:warehouses){
+  //System.out.printf(
+  //"Total items in warehouse %d: %d%n", warehouse, StockRepository.getItemsByWarehouse(warehouse).size());
+  //}
+  //}
 
   private void listItems(List<Item> items) {
     for (Item item : items) {
@@ -185,7 +186,7 @@ public class TheWarehouseManager {
   private void searchItemAndPlaceOrder() {
     String itemName = askItemToOrder();
     String answer = this.getAppropriateIndefiniteArticle(itemName);
-    String appropriateArticle = "Searched " +answer+ itemName;
+    String appropriateArticle = "Searched " + answer + itemName;
     SESSION_ACTIONS.add(appropriateArticle);
 
     List<Item> availableItems = this.listAvailableItems(itemName);
@@ -199,7 +200,7 @@ public class TheWarehouseManager {
     List<String> categories = new ArrayList<>(StockRepository.getCategories());
     for (int i = 0; i < categories.size(); i++) {
       String category = categories.get(i);
-      String browseAction = "Browsed the category " +category;
+      String browseAction = "Browsed the category " + category;
       SESSION_ACTIONS.add(browseAction);
       List<Item> catItems = StockRepository.getItemsByCategory(category);
       categoryWiseItems.put(category, catItems);
@@ -232,7 +233,7 @@ public class TheWarehouseManager {
    */
   private String askItemToOrder() {
     System.out.println("Which item you are interested in?");
-    return  this.reader.nextLine();
+    return this.reader.nextLine();
 
   }
 
@@ -297,7 +298,9 @@ public class TheWarehouseManager {
     return items;
   }
 
-  /** Ask order amount and confirm order */
+  /**
+   * Ask order amount and confirm order
+   */
   private void askAmountAndConfirmOrder(int availableAmount, String item) {
     // Check if user want's to order
     boolean toOrder = this.confirm("Would you like to order this item?");
@@ -309,6 +312,17 @@ public class TheWarehouseManager {
         System.out.printf(
                 "%d %s %s been ordered", orderAmount, item, (orderAmount == 1 ? "has" : "have"));
       }
+    }
+  }
+
+  /**
+   * private method named listSessionActions which returns nothing and prints the Session summary at the end of the session.
+   */
+  private void listSessionActions() {
+    if (SESSION_ACTIONS == null) {
+      System.out.println("In this session you have not done anything.");
+    } else {
+      System.out.println(SESSION_ACTIONS);
     }
   }
 

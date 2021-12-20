@@ -66,8 +66,8 @@ public class PersonnelRepository {
 	}
 
 	
-	public static boolean isUserValid(String userName, String password) {
+	//public static boolean isUserValid(String userName, String password) {
 		//to implement
-	}
+	//}
 
 }
