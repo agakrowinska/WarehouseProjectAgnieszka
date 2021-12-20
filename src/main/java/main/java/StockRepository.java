@@ -32,7 +32,7 @@ public class StockRepository {
 		try {
 			ITEM_LIST.clear();
 
-			reader = new BufferedReader(new FileReader("./data/stock.json"));
+			reader = new BufferedReader(new FileReader("./resources/stock.json"));
 			Object data = JSONValue.parse(reader);
 			if (data instanceof JSONArray) {
 				JSONArray dataArray = (JSONArray) data;
