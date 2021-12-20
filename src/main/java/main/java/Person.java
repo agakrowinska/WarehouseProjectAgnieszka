@@ -1,4 +1,4 @@
-package com.dci.java.data;
+package main.java;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class Person {
 	/**
-	 * Username of the Person
+	 *hello Username of the Person
 	 */
 	private String userName;
 	/**

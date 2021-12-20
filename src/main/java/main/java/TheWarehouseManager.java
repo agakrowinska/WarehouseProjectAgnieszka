@@ -1,7 +1,6 @@
 package main.java;
 
 import main.java.data.Item;
-import main.java.data.Repository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,6 +9,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import main.java.StockRepository;
 
 /**
  * Provides necessary methods to deal through the Warehouse management actions
@@ -24,30 +25,35 @@ public class TheWarehouseManager {
   // To read inputs from the console/CLI
   private final Scanner reader = new Scanner(System.in);
   public final String[] userOptions = {
-    "1. List items by warehouse",
+          "1. List items by warehouse",
           "2. Search an item and place an order",
           "3. Browse by category",
           "4. Quit"
   };
   // To refer the user provided name.
   private String userName;
+  public static List<String> SESSION_ACTIONS;
 
   // =====================================================================================
   // Public Member Methods
   // =====================================================================================
 
-  /** Welcome User */
+  /**
+   * Welcome User
+   */
   public void welcomeUser() {
     this.seekUserName();
     this.greetUser();
   }
 
-  /** Ask for user's choice of action */
+  /**
+   * Ask for user's choice of action
+   */
   public int getUsersChoice() {
     int choice;
     System.out.println("What would you like to do now?");
-    for (String option: this.userOptions){
-    System.out.println(option);
+    for (String option : this.userOptions) {
+      System.out.println(option);
     }
 
     System.out.println("Please type the number below:");
@@ -69,9 +75,11 @@ public class TheWarehouseManager {
   }
 
 
-  /** Initiate an action based on given option */
+  /**
+   * Initiate an action based on given option
+   */
   public void performAction(int option) {
-    switch(option){
+    switch (option) {
       case 1:
         this.listItemsByWarehouse();
         break;
@@ -95,23 +103,43 @@ public class TheWarehouseManager {
    * @return action
    */
   public boolean confirm(String message) {
-      System.out.printf("%s (y/n)%n", message);
-      String choice;
-      do {
-        choice = this.reader.nextLine();
-        if (choice.length() > 0) {
-          choice = choice.trim();
-        }
-      } while (!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"));
+    System.out.printf("%s (y/n)%n", message);
+    String choice;
+    do {
+      choice = this.reader.nextLine();
+      if (choice.length() > 0) {
+        choice = choice.trim();
+      }
+    } while (!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"));
 
-      return choice.equalsIgnoreCase("y");
-    }
+    return choice.equalsIgnoreCase("y");
+  }
 
-    /** End the application */
-    public void quit() {
-      System.out.printf("\nThanks for visiting %s!\n", this.userName);
-      System.exit(0);
+  /**
+   * End the application
+   */
+  public void quit() {
+    System.out.printf("\nThanks for visiting %s!\n", this.userName);
+    System.exit(0);
+  }
+
+  public int getTotalListedItems() {
+    //StockRepository.getAllItems();
+    int count = StockRepository.getAllItems().size();
+    return count;
+  }
+
+  public String getAppropriateIndefiniteArticle(String itemName) {
+    String article;
+    if (itemName.charAt(0) == 'a' || itemName.charAt(0)=='e' || itemName.charAt(0) == 'i' || itemName.charAt(0)=='o' || itemName.charAt(0)=='u') {
+      article = "an";
+    }else{
+      article = "a";
     }
+    return article;
+
+}
+
 
 
     // =====================================================================================
@@ -131,18 +159,22 @@ public class TheWarehouseManager {
     }
 
     private void listItemsByWarehouse (){
-        Set<Integer> warehouses=Repository.getWarehouses();
-        for(int warehouse:warehouses){
-        System.out.printf("Items in warehouse %d:%n",warehouse);
-        this.listItems(Repository.getItemsByWarehouse(warehouse));
+
+        int total = this.getTotalListedItems();
+        String listedItems = "Listed " + total+ " items";
+        SESSION_ACTIONS.add(listedItems);
+        //Set<Integer> warehouses=StockRepository.getWarehouses();
+        //for(int warehouse:warehouses){
+        //System.out.printf("Items in warehouse %d:%n",warehouse);
+        //this.listItems(StockRepository.getItemsByWarehouse(warehouse));
         }
 
-        System.out.println();
-        for(int warehouse:warehouses){
-        System.out.printf(
-                "Total items in warehouse %d: %d%n", warehouse, Repository.getItemsByWarehouse(warehouse).size());
-        }
-        }
+        //System.out.println();
+        //for(int warehouse:warehouses){
+        //System.out.printf(
+                //"Total items in warehouse %d: %d%n", warehouse, StockRepository.getItemsByWarehouse(warehouse).size());
+        //}
+        //}
 
   private void listItems(List<Item> items) {
     for (Item item : items) {
@@ -152,6 +184,10 @@ public class TheWarehouseManager {
 
   private void searchItemAndPlaceOrder() {
     String itemName = askItemToOrder();
+    String answer = this.getAppropriateIndefiniteArticle(itemName);
+    String appropriateArticle = "Searched " +answer+ itemName;
+    SESSION_ACTIONS.add(appropriateArticle);
+
     List<Item> availableItems = this.listAvailableItems(itemName);
     if (availableItems.size() > 0) {
       this.askAmountAndConfirmOrder(availableItems.size(), itemName);
@@ -160,10 +196,12 @@ public class TheWarehouseManager {
 
   private void browseByCategory() {
     Map<String, List<Item>> categoryWiseItems = new HashMap<>();
-    List<String> categories = new ArrayList<>(Repository.getCategories());
+    List<String> categories = new ArrayList<>(StockRepository.getCategories());
     for (int i = 0; i < categories.size(); i++) {
       String category = categories.get(i);
-      List<Item> catItems = Repository.getItemsByCategory(category);
+      String browseAction = "Browsed the category " +category;
+      SESSION_ACTIONS.add(browseAction);
+      List<Item> catItems = StockRepository.getItemsByCategory(category);
       categoryWiseItems.put(category, catItems);
       System.out.printf("%d. %s (%d)%n", (i + 1), category, catItems.size());
     }
@@ -223,9 +261,9 @@ public class TheWarehouseManager {
       // get warehouse wise availability
       int maxWarehouse = 0;
       int maxAvailability = 0;
-      Set<Integer> warehouses = Repository.getWarehouses();
+      Set<Integer> warehouses = StockRepository.getWarehouses();
       for (int wh : warehouses) {
-        int whCount = Repository.getItemsByWarehouse(wh, availableItems).size();
+        int whCount = StockRepository.getItemsByWarehouse(wh, availableItems).size();
         if (whCount > maxAvailability) {
           maxWarehouse = wh;
           maxAvailability = whCount;
@@ -251,7 +289,7 @@ public class TheWarehouseManager {
    */
   private List<Item> find(String item) {
     List<Item> items = new ArrayList<>();
-    for (Item wItem : Repository.getAllItems()) {
+    for (Item wItem : StockRepository.getAllItems()) {
       if (wItem.toString().equalsIgnoreCase(item)) {
         items.add(wItem);
       }
