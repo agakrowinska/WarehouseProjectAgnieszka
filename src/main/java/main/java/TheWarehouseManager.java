@@ -163,8 +163,8 @@ public class TheWarehouseManager {
 
     int total = this.getTotalListedItems();
     String listedItems = "Listed " + total + " items";
-    SESSION_ACTIONS.add(listedItems);
-    Set<Integer> warehouses=StockRepository.getWarehouses();
+    //SESSION_ACTIONS.add(listedItems);
+    //Set<Integer> warehouses=StockRepository.getWarehouses();
     //for(int warehouse:warehouses){
     //System.out.printf("Items in warehouse %d:%n",warehouse);
     //this.listItems(StockRepository.getItemsByWarehouse(warehouse));
