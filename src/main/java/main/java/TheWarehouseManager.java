@@ -79,12 +79,30 @@ public class TheWarehouseManager {
     switch (option) {
       case 1:
         this.listItemsByWarehouse();
+        boolean anotherAction = this.confirm("Would you like to perform another action?");
+        if(anotherAction == true){
+          int choice1 = this.getUsersChoice();
+          this.performAction(choice1);
+        }else{this.quit();
+        }
         break;
       case 2:
         this.searchItemAndPlaceOrder();
+        boolean anotherAction2 = this.confirm("Would you like to perform another action?");
+        if(anotherAction2 == true){
+          int choice2 = this.getUsersChoice();
+          this.performAction(choice2);
+        }else{this.quit();
+        }
         break;
       case 3:
         this.browseByCategory();
+        boolean anotherAction3 = this.confirm("Would you like to perform another action?");
+        if(anotherAction3 == true){
+          int choice2 = this.getUsersChoice();
+          this.performAction(choice2);
+        }else{this.quit();
+        }
         break;
       case 4:
         this.quit();
