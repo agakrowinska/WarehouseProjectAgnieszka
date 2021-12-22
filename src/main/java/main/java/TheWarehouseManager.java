@@ -29,7 +29,8 @@ public class TheWarehouseManager {
   };
   // To refer the user provided name.
   private String userName;
-  public static List<String> SESSION_ACTIONS;
+  //public static List<String> SESSION_ACTIONS;
+  public ArrayList<String> SESSION_ACTIONS = new ArrayList<>();
 
   // =====================================================================================
   // Public Member Methods
@@ -76,6 +77,7 @@ public class TheWarehouseManager {
    * Initiate an action based on given option
    */
   public void performAction(int option) {
+
     switch (option) {
       case 1:
         this.listItemsByWarehouse();
@@ -99,8 +101,7 @@ public class TheWarehouseManager {
   public void anotherAction() {
     boolean newAction = this.confirm("Would you like to perform another action?");
     if (newAction == true) {
-      int newChoice = this.
-      this.getUsersChoice();();
+      int newChoice = this.getUsersChoice();
       this.performAction(newChoice);
     } else {
       this.quit();
@@ -143,9 +144,9 @@ public class TheWarehouseManager {
   public String getAppropriateIndefiniteArticle(String itemName) {
     String article;
     if (itemName.charAt(0) == 'a' || itemName.charAt(0) == 'e' || itemName.charAt(0) == 'i' || itemName.charAt(0) == 'o' || itemName.charAt(0) == 'u') {
-      article = "an";
+      article = "an ";
     } else {
-      article = "a";
+      article = "a ";
     }
     return article;
 
@@ -213,8 +214,6 @@ public class TheWarehouseManager {
     List<String> categories = new ArrayList<>(StockRepository.getCategories());
     for (int i = 0; i < categories.size(); i++) {
       String category = categories.get(i);
-      String browseAction = "Browsed the category " + category;
-      SESSION_ACTIONS.add(browseAction);
       List<Item> catItems = StockRepository.getItemsByCategory(category);
       categoryWiseItems.put(category, catItems);
       System.out.printf("%d. %s (%d)%n", (i + 1), category, catItems.size());
@@ -232,6 +231,8 @@ public class TheWarehouseManager {
     } while (catIndex <= 0 || catIndex > categories.size());
 
     String category = categories.get(catIndex - 1);
+    String browseAction = "Browsed the category " + category;
+    SESSION_ACTIONS.add(browseAction);
     System.out.printf("List of %ss available:%n", category.toLowerCase());
     List<Item> catItems = categoryWiseItems.get(category);
     for (Item item : catItems) {

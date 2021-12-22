@@ -1,5 +1,7 @@
 package main.java;
 
+import java.util.*;
+
 /**
  *
  * @author riteshp
@@ -11,6 +13,7 @@ public class TheWarehouseApp {
    * @param args
    */
   public static void main(String[] args) {
+    List<String> SESSION_ACTIONS = new ArrayList<>();
     TheWarehouseManager theManager = new TheWarehouseManager();
 
     // Welcome User
