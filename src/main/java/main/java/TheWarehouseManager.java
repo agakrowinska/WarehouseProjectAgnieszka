@@ -67,9 +67,9 @@ public class TheWarehouseManager {
       }
     } while (choice < 1 || choice > userOptions.length);
 
-    // return the valid choice
     return choice;
   }
+
 
 
   /**
@@ -79,36 +79,31 @@ public class TheWarehouseManager {
     switch (option) {
       case 1:
         this.listItemsByWarehouse();
-        boolean anotherAction = this.confirm("Would you like to perform another action?");
-        if(anotherAction == true){
-          int choice1 = this.getUsersChoice();
-          this.performAction(choice1);
-        }else{this.quit();
-        }
+        this.anotherAction();
         break;
       case 2:
         this.searchItemAndPlaceOrder();
-        boolean anotherAction2 = this.confirm("Would you like to perform another action?");
-        if(anotherAction2 == true){
-          int choice2 = this.getUsersChoice();
-          this.performAction(choice2);
-        }else{this.quit();
-        }
+        this.anotherAction();
         break;
       case 3:
         this.browseByCategory();
-        boolean anotherAction3 = this.confirm("Would you like to perform another action?");
-        if(anotherAction3 == true){
-          int choice2 = this.getUsersChoice();
-          this.performAction(choice2);
-        }else{this.quit();
-        }
+        this.anotherAction();
         break;
       case 4:
         this.quit();
         break;
       default:
         System.out.println("It is not a valid operation");
+    }
+  }
+  public void anotherAction() {
+    boolean newAction = this.confirm("Would you like to perform another action?");
+    if (newAction == true) {
+      int newChoice = this.
+      this.getUsersChoice();();
+      this.performAction(newChoice);
+    } else {
+      this.quit();
     }
   }
 
