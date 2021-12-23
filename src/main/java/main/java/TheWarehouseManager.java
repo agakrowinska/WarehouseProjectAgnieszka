@@ -177,19 +177,19 @@ public class TheWarehouseManager {
 
     int total = this.getTotalListedItems();
     String listedItems = "Listed " + total + " items";
-    //SESSION_ACTIONS.add(listedItems);
-    //Set<Integer> warehouses=StockRepository.getWarehouses();
-    //for(int warehouse:warehouses){
-    //System.out.printf("Items in warehouse %d:%n",warehouse);
-    //this.listItems(StockRepository.getItemsByWarehouse(warehouse));
+    SESSION_ACTIONS.add(listedItems);
+    Set<Integer> warehouses=StockRepository.getWarehouses();
+    for(int warehouse:warehouses){
+    System.out.printf("Items in warehouse %d:%n",warehouse);
+    this.listItems(StockRepository.getItemsByWarehouse(warehouse));
   }
 
-  //System.out.println();
-  //for(int warehouse:warehouses){
-  //System.out.printf(
-  //"Total items in warehouse %d: %d%n", warehouse, StockRepository.getItemsByWarehouse(warehouse).size());
-  //}
-  //}
+  System.out.println();
+  for(int warehouse:warehouses){
+  System.out.printf(
+  "Total items in warehouse %d: %d%n", warehouse, StockRepository.getItemsByWarehouse(warehouse).size());
+  }
+  }
 
   private void listItems(List<Item> items) {
     for (Item item : items) {
@@ -204,6 +204,8 @@ public class TheWarehouseManager {
     SESSION_ACTIONS.add(appropriateArticle);
 
     List<Item> availableItems = this.listAvailableItems(itemName);
+
+
     if (availableItems.size() > 0) {
       this.askAmountAndConfirmOrder(availableItems.size(), itemName);
     }
@@ -284,7 +286,6 @@ public class TheWarehouseManager {
           maxAvailability = whCount;
         }
       }
-
       // find the warehouse with max
       System.out.printf(
               "Maximum availability: %d in warehouse %d%n", maxAvailability, maxWarehouse);
@@ -304,8 +305,14 @@ public class TheWarehouseManager {
    */
   private List<Item> find(String item) {
     List<Item> items = new ArrayList<>();
-    for (Item wItem : StockRepository.getAllItems()) {
-      if (wItem.toString().equalsIgnoreCase(item)) {
+    //System.out.println(StockRepository.getAllItems());
+
+
+    for (Item wItem : StockRepository.getItemsByCategory(item)) {
+
+      if (wItem.getCategory().toString().equalsIgnoreCase(item)) {
+       // System.out.println(wItem);
+        //System.out.println("/");
         items.add(wItem);
       }
     }
