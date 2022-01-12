@@ -29,7 +29,7 @@ public class PersonnelRepository {
 		try {
 			PERSON_LIST.clear();
 
-			reader = new BufferedReader(new FileReader("./data/personnel.json"));
+			reader = new BufferedReader(new FileReader("/Users/temporaryadmin/Documents/firstJavaProject23Sept/src/resources/personnel.json"));
 			Object data = JSONValue.parse(reader);
 			if (data instanceof JSONArray) {
 				JSONArray dataArray = (JSONArray) data;
@@ -58,16 +58,23 @@ public class PersonnelRepository {
 
 	/**
 	 * Get All persons
-	 * 
+	 *
 	 * @return
 	 */
 	public static List<Person> getAllPersons() {
 		return PERSON_LIST;
 	}
 
-	
-	//public static boolean isUserValid(String userName, String password) {
-		//to implement
-	//}
 
+	public static boolean isUserValid(String userName, String password) {
+		boolean decision = false;
+
+		for (Person person : PERSON_LIST) {
+			if (person.getPassword() == password && person.getUserName() == userName) {
+				decision = true;
+			}
+
+		}
+		return decision;
+	}
 }

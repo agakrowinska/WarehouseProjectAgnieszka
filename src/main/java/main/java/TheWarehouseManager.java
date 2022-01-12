@@ -153,6 +153,7 @@ public class TheWarehouseManager {
   }
 
 
+
   // =====================================================================================
   // Private Methods
   // =====================================================================================
@@ -325,13 +326,26 @@ public class TheWarehouseManager {
   private void askAmountAndConfirmOrder(int availableAmount, String item) {
     // Check if user want's to order
     boolean toOrder = this.confirm("Would you like to order this item?");
+
     if (toOrder) {
       // get the amount to order
+      System.out.print("\nYou have to log in to order an item.\nPlease provide your username:\n");
+      String userLoginName = this.reader.nextLine();
+      System.out.println("\nPlease provide your user password\n");
+      String userLoginPassword = this.reader.nextLine();
+      boolean matchingLogin = PersonnelRepository.isUserValid(userLoginName,userLoginPassword);
+
+      if(matchingLogin == true){
+
       int orderAmount = this.getOrderAmount(availableAmount);
+
       // Confirm order if amount is positive
       if (orderAmount > 0) {
         System.out.printf(
                 "%d %s %s been ordered", orderAmount, item, (orderAmount == 1 ? "has" : "have"));
+      }
+      }else{
+        System.out.println("Incorrect login or password");
       }
     }
   }
@@ -355,7 +369,7 @@ public class TheWarehouseManager {
    */
   private int getOrderAmount(int availableAmount) {
     int orderAmount;
-    System.out.println("How many would you like?");
+    System.out.println("How many items would you like to order?");
     do {
       String orderAmtValue = this.reader.nextLine();
       try {
