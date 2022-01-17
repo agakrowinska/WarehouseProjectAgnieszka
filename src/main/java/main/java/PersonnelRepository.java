@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class PersonnelRepository {
 
+	public static boolean safeCredentials;
+
 	private static List<Person> PERSON_LIST = new ArrayList<Person>();
 
 	/**
@@ -68,10 +70,13 @@ public class PersonnelRepository {
 
 	public static boolean isUserValid(String userName, String password) {
 		boolean decision = false;
+		List<Person> everyEmployee = getAllPersons();
 
-		for (Person person : PERSON_LIST) {
+		for (Person person : everyEmployee) {
+			//if (person.getUserName() == "Jeremy" && person.getPassword()=="coppers"){
 			if (person.getPassword() == password && person.getUserName() == userName) {
 				decision = true;
+				safeCredentials = true;
 			}
 
 		}

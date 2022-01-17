@@ -32,6 +32,7 @@ public class TheWarehouseManager {
   //public static List<String> SESSION_ACTIONS;
   public ArrayList<String> SESSION_ACTIONS = new ArrayList<>();
 
+
   // =====================================================================================
   // Public Member Methods
   // =====================================================================================
@@ -329,13 +330,22 @@ public class TheWarehouseManager {
 
     if (toOrder) {
       // get the amount to order
-      System.out.print("\nYou have to log in to order an item.\nPlease provide your username:\n");
+      boolean matchingLogin;
+      do {
+        //if matching login equals true it should skip the thing
+        System.out.print("\nYou have to log in to order an item.\nPlease provide your username:\n");
       String userLoginName = this.reader.nextLine();
       System.out.println("\nPlease provide your user password\n");
       String userLoginPassword = this.reader.nextLine();
-      boolean matchingLogin = PersonnelRepository.isUserValid(userLoginName,userLoginPassword);
+      matchingLogin = PersonnelRepository.isUserValid(userLoginName,userLoginPassword);
+      if (matchingLogin == false){
+        System.out.println("Incorrect login or password. Please try again.");
+      }
+      }
 
-      if(matchingLogin == true){
+       while (!matchingLogin);
+
+      if(matchingLogin){
 
       int orderAmount = this.getOrderAmount(availableAmount);
 
@@ -344,8 +354,7 @@ public class TheWarehouseManager {
         System.out.printf(
                 "%d %s %s been ordered", orderAmount, item, (orderAmount == 1 ? "has" : "have"));
       }
-      }else{
-        System.out.println("Incorrect login or password");
+
       }
     }
   }
