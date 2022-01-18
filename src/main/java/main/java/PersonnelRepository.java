@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The Data Repository
@@ -73,11 +74,14 @@ public class PersonnelRepository {
 		List<Person> everyEmployee = getAllPersons();
 
 		for (Person person : everyEmployee) {
-			//if (person.getUserName() == "Jeremy" && person.getPassword()=="coppers"){
-			if (person.getPassword() == password && person.getUserName() == userName) {
-				decision = true;
-				safeCredentials = true;
+			decision =(Objects.equals(person.getPassword(),password ) && Objects.equals(person.getUserName(),userName ));
+			if (decision == true){
+				break;
 			}
+
+
+				//safeCredentials = true;
+
 
 		}
 		return decision;
