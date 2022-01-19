@@ -25,6 +25,13 @@ public class Item {
 	 */
 	private Date dateOfStock;
 
+	public Item(String state, String category, int warehouse, Date dateOfStock) {
+		this.state = state;
+		this.category = category;
+		this.warehouse = warehouse;
+		this.dateOfStock = dateOfStock;
+	}
+
 	// setters and getters
 	public String getState() {
 		return state;

@@ -39,7 +39,7 @@ public class StockRepository {
 				for (Object obj : dataArray) {
 					if (obj instanceof JSONObject) {
 						JSONObject jsonData = (JSONObject) obj;
-						Item item = new Item();
+						Item item = new Item(jsonData.get("state").toString(),jsonData.get("category").toString(),Integer.parseInt(jsonData.get("warehouse").toString()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(jsonData.get("date_of_stock").toString()));
 						item.setState(jsonData.get("state").toString());
 						item.setCategory(jsonData.get("category").toString());
 						item.setWarehouse(Integer.parseInt(jsonData.get("warehouse").toString()));
