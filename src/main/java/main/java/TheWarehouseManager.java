@@ -18,7 +18,7 @@ public class TheWarehouseManager {
   // =====================================================================================
   // Member Variables
   // =====================================================================================
-
+  boolean matchingLogin = false;
   // To read inputs from the console/CLI
   private final Scanner reader = new Scanner(System.in);
   public final String[] userOptions = {
@@ -100,7 +100,7 @@ public class TheWarehouseManager {
     }
   }
   public void anotherAction() {
-    boolean newAction = this.confirm("Would you like to perform another action?");
+    boolean newAction = this.confirm(" Would you like to perform another action?");
     if (newAction == true) {
       int newChoice = this.getUsersChoice();
       this.performAction(newChoice);
@@ -330,9 +330,11 @@ public class TheWarehouseManager {
 
     if (toOrder) {
       // get the amount to order
-      boolean matchingLogin;
+
       do {
-        //if matching login equals true it should skip the thing
+        if (matchingLogin){
+          break;//if matching login equals true it should skip the thing
+        }
         System.out.print("\nYou have to log in to order an item.\nPlease provide your username:\n");
       String userLoginName = this.reader.nextLine();
       System.out.println("\nPlease provide your user password\n");
