@@ -1,5 +1,6 @@
 package main.java;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class Employee extends User {
@@ -24,14 +25,23 @@ public class Employee extends User {
         System.out.println("You have ordered " + amount +" " + item + ".");
     }
 
-    public void greet (){
+    public void greet(){
         System.out.println("Hello, " + name + "!\n" +
                 "If you experience a problem with the system,\n" +
                 "please contact technical support.");
     }
 
+    @Override
+    public void bye(){
+        //super.bye();
+        //Class action = Class.forName("TheWarehouseManager");
+        //Object warehouseManagerInstance = action.newInstance();
+        //Method sessions = action.getDeclaredMethod("listSessionActions",null);
+        //sessions.setAccessible(true);
+        TheWarehouseManager action = new TheWarehouseManager();
+        System.out.println(action.SESSION_ACTIONS);
 
-    public void bye (){
+
 
     }
 }
