@@ -37,14 +37,14 @@ public class WarehouseRepository {
 			//ITEM_LIST.clear();
 			WAREHOUSE_LIST.clear();
 
-			reader = new BufferedReader(new FileReader("./data/stock.json"));
+			reader = new BufferedReader(new FileReader("/Users/temporaryadmin/Documents/firstJavaProject23Sept/src/resources/stock.json"));
 			Object data = JSONValue.parse(reader);
 			if (data instanceof JSONArray) {
 				JSONArray dataArray = (JSONArray) data;
 				for (Object obj : dataArray) {
 					if (obj instanceof JSONObject) {
 						JSONObject jsonData = (JSONObject) obj;
-						Item item = new Item();
+						Item item = new Item(jsonData.get("state").toString(),jsonData.get("category").toString(),Integer.parseInt(jsonData.get("warehouse").toString()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(jsonData.get("date_of_stock").toString()));
 						item.setState(jsonData.get("state").toString());
 						item.setCategory(jsonData.get("category").toString());
 						String date = jsonData.get("date_of_stock").toString();

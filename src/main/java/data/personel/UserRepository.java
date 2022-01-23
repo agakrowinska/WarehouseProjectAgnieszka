@@ -84,6 +84,7 @@ public class UserRepository {
 	
 	public static boolean isUserEmployee(String name) {
 		//to implement
+		return true;
 	}
 
 }
