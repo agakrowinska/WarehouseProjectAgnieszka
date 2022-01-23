@@ -1,5 +1,7 @@
 package main.java;
 
+import data.stock.Item;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

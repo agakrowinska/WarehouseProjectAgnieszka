@@ -1,4 +1,4 @@
-package main.java;
+package data.stock;
 
 import java.util.List;
 
@@ -9,6 +9,18 @@ public class Warehouse {
     //should it be Integer?
     private List<Item> stock;
 
+    public int getId() {
+        return id;
+    }
+
+    public List<Item> getStock() {
+        return stock;
+    }
+
+    public Warehouse(int id, List<Item> stock) {
+        this.id = id;
+        this.stock = stock;
+    }
 
     public Warehouse (int i_warehouseId){
 

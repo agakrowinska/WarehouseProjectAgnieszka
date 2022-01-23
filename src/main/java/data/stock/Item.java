@@ -1,4 +1,4 @@
-package main.java;
+package data.stock;
 
 import java.util.Date;
 

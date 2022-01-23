@@ -1,11 +1,17 @@
-package main.java;
+package data.personel;
 
-import java.lang.reflect.Method;
+import main.java.TheWarehouseManager;
+
 import java.util.List;
 
 public class Employee extends User {
 
     private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
     private List<Employee> headOf;
     //empty List by default
 
@@ -33,11 +39,7 @@ public class Employee extends User {
 
     @Override
     public void bye(){
-        //super.bye();
-        //Class action = Class.forName("TheWarehouseManager");
-        //Object warehouseManagerInstance = action.newInstance();
-        //Method sessions = action.getDeclaredMethod("listSessionActions",null);
-        //sessions.setAccessible(true);
+        System.out.println("Thank you. Have a great day!");
         TheWarehouseManager action = new TheWarehouseManager();
         System.out.println(action.SESSION_ACTIONS);
 

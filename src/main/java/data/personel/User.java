@@ -1,4 +1,4 @@
-package main.java;
+package data.personel;
 
 //import static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List;
 
@@ -6,6 +6,10 @@ public class User {
 
     protected String name = "Anonymous";
     private boolean isAuthenticated = false;
+
+    public String getName() {
+        return name;
+    }
 
     public User(String userName) {
         this.name = userName;
