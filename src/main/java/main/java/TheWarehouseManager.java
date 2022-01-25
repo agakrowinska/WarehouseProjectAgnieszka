@@ -1,5 +1,6 @@
 package main.java;
 
+import data.personel.UserRepository;
 import data.stock.Item;
 
 import java.util.ArrayList;
@@ -341,7 +342,7 @@ public class TheWarehouseManager {
       String userLoginName = this.reader.nextLine();
       System.out.println("\nPlease provide your user password\n");
       String userLoginPassword = this.reader.nextLine();
-      matchingLogin = PersonnelRepository.isUserValid(userLoginName,userLoginPassword);
+      matchingLogin = UserRepository.isUserValid(userLoginName,userLoginPassword);
       if (matchingLogin == false){
         System.out.println("Incorrect login or password. Please try again.");
       }

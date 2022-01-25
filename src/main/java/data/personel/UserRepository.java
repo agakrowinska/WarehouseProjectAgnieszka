@@ -1,4 +1,4 @@
-package com.dci.java.data;
+package data.personel;
 
 import data.personel.Employee;
 import org.json.simple.JSONArray;
@@ -20,7 +20,7 @@ import java.util.Set;
  * @author pujanov
  *
  */
-public class UserRepository {
+public class UserRepository{
 
 	private static List<Employee> EMPLOYEE_LIST = new ArrayList<Employee>();
 
@@ -33,7 +33,7 @@ public class UserRepository {
 		try {
 			EMPLOYEE_LIST.clear();
 
-			reader = new BufferedReader(new FileReader("./data/personnel.json"));
+			reader = new BufferedReader(new FileReader("/Users/temporaryadmin/Documents/firstJavaProject23Sept/src/resources/personnel.json"));
 			Object data = JSONValue.parse(reader);
 			if (data instanceof JSONArray) {
 				JSONArray dataArray = (JSONArray) data;
@@ -68,7 +68,7 @@ public class UserRepository {
 		return EMPLOYEE_LIST;
 	}
 
-	
+
 	public static boolean isUserValid(String userName, String password) {
 		List<Employee> employees = getAllEmployees();
 		
