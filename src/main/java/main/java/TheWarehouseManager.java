@@ -2,6 +2,7 @@ package main.java;
 
 import data.personel.UserRepository;
 import data.stock.Item;
+import data.stock.WarehouseRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -141,7 +142,7 @@ public class TheWarehouseManager {
 
   public int getTotalListedItems() {
     //StockRepository.getAllItems();
-    int count = StockRepository.getAllItems().size();
+    int count = WarehouseRepository.getAllItems().size();
     return count;
   }
 
@@ -183,16 +184,16 @@ public class TheWarehouseManager {
     int total = this.getTotalListedItems();
     String listedItems = "Listed " + total + " items";
     SESSION_ACTIONS.add(listedItems);
-    Set<Integer> warehouses=StockRepository.getWarehouses();
+    Set<Integer> warehouses= WarehouseRepository.getWarehouses();
     for(int warehouse:warehouses){
     System.out.printf("Items in warehouse %d:%n",warehouse);
-    this.listItems(StockRepository.getItemsByWarehouse(warehouse));
+    this.listItems(WarehouseRepository.getItemsByWarehouse(warehouse));
   }
 
   System.out.println();
   for(int warehouse:warehouses){
   System.out.printf(
-  "Total items in warehouse %d: %d%n", warehouse, StockRepository.getItemsByWarehouse(warehouse).size());
+  "Total items in warehouse %d: %d%n", warehouse, WarehouseRepository.getItemsByWarehouse(warehouse).size());
   }
   }
 
@@ -218,10 +219,10 @@ public class TheWarehouseManager {
 
   private void browseByCategory() {
     Map<String, List<Item>> categoryWiseItems = new HashMap<>();
-    List<String> categories = new ArrayList<>(StockRepository.getCategories());
+    List<String> categories = new ArrayList<>(WarehouseRepository.getCategories());
     for (int i = 0; i < categories.size(); i++) {
       String category = categories.get(i);
-      List<Item> catItems = StockRepository.getItemsByCategory(category);
+      List<Item> catItems = WarehouseRepository.getItemsByCategory(category);
       categoryWiseItems.put(category, catItems);
       System.out.printf("%d. %s (%d)%n", (i + 1), category, catItems.size());
     }
@@ -283,9 +284,9 @@ public class TheWarehouseManager {
       // get warehouse wise availability
       int maxWarehouse = 0;
       int maxAvailability = 0;
-      Set<Integer> warehouses = StockRepository.getWarehouses();
+      Set<Integer> warehouses = WarehouseRepository.getWarehouses();
       for (int wh : warehouses) {
-        int whCount = StockRepository.getItemsByWarehouse(wh, availableItems).size();
+        int whCount = WarehouseRepository.getItemsByWarehouse(wh, availableItems).size();
         if (whCount > maxAvailability) {
           maxWarehouse = wh;
           maxAvailability = whCount;
@@ -313,7 +314,7 @@ public class TheWarehouseManager {
     //System.out.println(StockRepository.getAllItems());
 
 
-    for (Item wItem : StockRepository.getItemsByCategory(item)) {
+    for (Item wItem : WarehouseRepository.getItemsByCategory(item)) {
 
       if (wItem.getCategory().toString().equalsIgnoreCase(item)) {
        // System.out.println(wItem);

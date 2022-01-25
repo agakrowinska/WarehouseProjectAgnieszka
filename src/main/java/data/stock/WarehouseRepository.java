@@ -1,4 +1,4 @@
-package main.java.data.stock;
+package data.stock;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
