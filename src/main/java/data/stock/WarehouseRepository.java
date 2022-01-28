@@ -90,21 +90,24 @@ public class WarehouseRepository {
 	 * @return
 	 */
 
-	  public static List<Item> getAllItems() { 
-		  
+	  public static List<Item> getAllItems() {
+
 		  List<Item> allItems = new ArrayList<Item>();
-		  
+
 		  //for(Warehouse warehouse : WAREHOUSE_LIST) {
-		  for(int i=0; i < WAREHOUSE_LIST.size(); i++) {
-			  List<Item> itemsWarehouse = new ArrayList<Item>(); 
-			  for(Item item : WAREHOUSE_LIST.get(i).getStock()) {
-				  item.setWarehouse(WAREHOUSE_LIST.get(i).getId());
-				  itemsWarehouse.add(item);
-			  }
-			  allItems.addAll(itemsWarehouse);
+		  for (int i = 0; i < WAREHOUSE_LIST.size(); i++) {
+			  List<Item> itemsWarehouse = new ArrayList<Item>();
+			  //for(Item item : WAREHOUSE_LIST.get(i).getStock()) {
+			  //item.setWarehouse(WAREHOUSE_LIST.get(i).getId());
+			  //itemsWarehouse.add(item);
+			  //}
+			  // allItems.addAll(itemsWarehouse);
+			  //}
+			  //return allItems;
 		  }
-		  return allItems; 
-		  }
+		  return allItems;
+	  }
+
 	 
 	// By Warehouse
 		/**
@@ -113,7 +116,7 @@ public class WarehouseRepository {
 		 * @return
 		 */
 		public static Set<Integer> getWarehouses() {
-			Set<Integer> warehouses = new HashSet<Integer>();
+			Set<Integer> warehouses = new HashSet<>();
 			for (Warehouse warehouse : WAREHOUSE_LIST) {
 				warehouses.add(warehouse.getId());
 			}

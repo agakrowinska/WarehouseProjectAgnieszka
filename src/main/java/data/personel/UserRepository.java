@@ -20,7 +20,7 @@ import java.util.Set;
  * @author pujanov
  *
  */
-public class UserRepository{
+public class UserRepository {
 
 	private static List<Employee> EMPLOYEE_LIST = new ArrayList<Employee>();
 
@@ -61,7 +61,7 @@ public class UserRepository{
 
 	/**
 	 * Get All persons
-	 * 
+	 *
 	 * @return
 	 */
 	public static List<Employee> getAllEmployees() {
@@ -71,20 +71,25 @@ public class UserRepository{
 
 	public static boolean isUserValid(String userName, String password) {
 		List<Employee> employees = getAllEmployees();
-		
-		for(Employee employee : employees) {
-			if(userName.equals(employee.getName())) {
-				if(password.equals(employee.getPassword())) {
+
+		for (Employee employee : employees) {
+			if (userName.equals(employee.getName())) {
+				if (password.equals(employee.getPassword())) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
-	public static boolean isUserEmployee(String name) {
-		//to implement
-		return true;
-	}
 
+	public static boolean isUserEmployee(String name) {
+		List<Employee> employees = getAllEmployees();
+
+		for (Employee employee : employees) {
+			if (name.equals(employee.getName())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

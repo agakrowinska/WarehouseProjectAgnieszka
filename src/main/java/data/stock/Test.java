@@ -11,7 +11,7 @@ public class Test {
         System.out.println(one.occupancy());
         System.out.println("should result 0 : ");
         System.out.println(two.occupancy());
-        for (Warehouse warehouse : main.java.data.stock.WarehouseRepository.WAREHOUSE_LIST) {
+        for (Warehouse warehouse : data.stock.WarehouseRepository.WAREHOUSE_LIST) {
             System.out.println(warehouse.toString());
         }
 

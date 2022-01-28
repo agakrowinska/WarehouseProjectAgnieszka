@@ -10,21 +10,22 @@ public class Warehouse {
     private List<Item> stock;
 
     public int getId() {
+        id = 1;
         return id;
-    }
+   }
 
-    public List<Item> getStock() {
-        return stock;
-    }
+   // public List<Item> getStock() {
+        //return stock;
+    //}
 
-    public Warehouse(int id, List<Item> stock) {
+    public Warehouse(int id) {
         this.id = id;
-        this.stock = stock;
-    }
-
-    public Warehouse (int i_warehouseId){
 
     }
+
+    //public Warehouse (int i_warehouseId){
+
+    //}
     public int occupancy(){
 
         return 0;
